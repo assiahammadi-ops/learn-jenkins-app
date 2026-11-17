@@ -37,9 +37,14 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                NETLIFY_SITE_ID = 'REMPLACE_PAR_TON_SITE_ID'
+                NETLIFY_AUTH_TOKEN = credentials('netlify-token')
+            }
             steps {
                 sh 'npm install netlify-cli'
-                sh 'node_modules/.bin/netlify --version'
+                sh 'node_modules/.bin/netlify status'
+                sh 'node_modules/.bin/netlify deploy --dir=build --prod'
             }
         }
     }
